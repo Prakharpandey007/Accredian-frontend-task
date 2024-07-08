@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* Hamburger Menu */
+.hamburger span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin: 5px auto;
+  transition: all 0.3s ease-in-out;
+  background-color: #333;
+}
+
+.hamburger.open .hamburger-top {
+  transform: rotate(45deg);
+  top: 10px;
+  position: relative;
+}
+
+.hamburger.open .hamburger-middle {
+  opacity: 0;
+}
+
+.hamburger.open .hamburger-bottom {
+  transform: rotate(-45deg);
+  top: -10px;
+  position: relative;
+}
+
+/* Menu Items */
+.md\\:hidden {
+  display: none;
+}
