@@ -6,7 +6,7 @@ import Datacontext from '../context/Datacontext';
 const Hero = () => {
   const {setShowForm}=useContext(Datacontext);
   return (
-    <section id='hero' className='flex  flex-col items-center gap-4 relative'>
+    <section id='hero' className='flex  flex-col items-center gap-4 relative mt-10'>
      
       <div className='flex  flex-wrap justify-evenly  w-[300px] md:w-[500px] bg-[#e6f0fc] p-2 text-[#4c4c4c] rounded-full font-semibold'>
                 <div className='hover:text-[#1b74e8] cursor-pointer' onClick={()=>{setShowForm(true)}}>Refer</div>

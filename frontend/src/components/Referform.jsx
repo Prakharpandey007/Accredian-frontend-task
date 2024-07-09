@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import DataContext from "../context/Datacontext";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import axios from 'axios';
 
 function ReferForm() {
   const { setShowForm } = useContext(DataContext);
@@ -14,147 +15,90 @@ function ReferForm() {
     setLoading(true);
     const toastId = toast.loading("Loading...");
     try {
-      // const response=await axios.post(`${process.env.REACT_APP_BACKEND_URL}/add-referal`,data);
-      // console.log(response);
-      const successToast = toast.success("Referral Successful");
-      const emailToast = toast.success("Email Sent Successfully");
-      setTimeout(() => {
-        toast.dismiss(successToast);
-        toast.dismiss(emailToast);
-      }, 1000);
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/referal`, data);
+      console.log(response);
+      toast.dismiss(toastId);
+      toast.success("Congratulations! Email sent successfully.");
     } catch (error) {
       console.log("ERROR MESSAGE - ", error.message);
-      const failureToast = toast.error("Referral Unsuccessful");
-      setTimeout(() => {
-        toast.dismiss(failureToast);
-      }, 1000);
+      toast.dismiss(toastId);
+      toast.error("Try again.");
     }
     setLoading(false);
-    toast.dismiss(toastId);
   };
 
   useEffect(() => {
     if (isSubmitSuccessful) {
       reset({
-        course_id: "", course_name: "", sender_email: "", sender_name: "",
-        target_email: "", target_name: "", target_phone: ""
+        sender_email: "", subject: "", message: ""
       });
     }
   }, [reset, isSubmitSuccessful]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm">
-      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-lg mx-4 mt-10">
-        <div className="flex justify-between items-center mb-4">
-          <h1 className="text-2xl font-bold text-blue-600">Refer a Friend</h1>
+    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black bg-opacity-50">
+      <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-lg mx-4 mt-10 transform transition-all duration-300 hover:scale-105">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-bold text-blue-600">Refer a Friend</h1>
           <img
             onClick={() => { setShowForm(false); }}
-            className="cursor-pointer w-6 h-6 hover:scale-110"
+            className="cursor-pointer w-8 h-8 hover:rotate-90 transition-transform duration-300"
             src={crossIcon}
             alt="Close"
           />
         </div>
-        <form onSubmit={handleSubmit(submitContactForm)}>
-          <h2 className="text-xl font-semibold text-blue-600 mb-4">Referrer Details</h2>
-          <div className="mb-4">
-            <label htmlFor="sender_name" className="block text-gray-700 mb-1">Name</label>
-            <input
-              type="text"
-              name="sender_name"
-              id="sender_name"
-              className="w-full rounded-lg border py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              {...register("sender_name", { required: true })}
-            />
-            {errors.sender_name && (
-              <span className="text-xs text-red-500">Please enter your name.</span>
-            )}
-          </div>
-          <div className="mb-4">
-            <label htmlFor="sender_email" className="block text-gray-700 mb-1">Email</label>
+        <form onSubmit={handleSubmit(submitContactForm)} className="space-y-6">
+          <h2 className="text-2xl font-semibold text-blue-600 mb-4">Referral Details</h2>
+          
+          <div>
+            <label htmlFor="sender_email" className="block text-gray-700 font-medium mb-2">Email</label>
             <input
               type="email"
               name="sender_email"
               id="sender_email"
-              className="w-full rounded-lg border py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full rounded-lg border-2 border-gray-300 py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300"
               {...register("sender_email", { required: true })}
             />
             {errors.sender_email && (
-              <span className="text-xs text-red-500">Please enter your email.</span>
+              <span className="text-sm text-red-500 mt-1">Please enter your email.</span>
             )}
           </div>
-          <h2 className="text-xl font-semibold text-blue-600 mb-4">Referee Details</h2>
-          <div className="mb-4">
-            <label htmlFor="target_name" className="block text-gray-700 mb-1">Name</label>
+          
+          <div>
+            <label htmlFor="subject" className="block text-gray-700 font-medium mb-2">Subject</label>
             <input
               type="text"
-              name="target_name"
-              id="target_name"
-              className="w-full rounded-lg border py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              {...register("target_name", { required: true })}
+              name="subject"
+              id="subject"
+              className="w-full rounded-lg border-2 border-gray-300 py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300"
+              {...register("subject", { required: true })}
             />
-            {errors.target_name && (
-              <span className="text-xs text-red-500">Please enter the referee's name.</span>
+            {errors.subject && (
+              <span className="text-sm text-red-500 mt-1">Please enter the subject.</span>
             )}
           </div>
-          <div className="mb-4">
-            <label htmlFor="target_email" className="block text-gray-700 mb-1">Email</label>
-            <input
-              type="email"
-              name="target_email"
-              id="target_email"
-              className="w-full rounded-lg border py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              {...register("target_email", { required: true })}
+          
+          <div>
+            <label htmlFor="message" className="block text-gray-700 font-medium mb-2">Message</label>
+            <textarea
+              name="message"
+              id="message"
+              className="w-full rounded-lg border-2 border-gray-300 py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300"
+              rows="4"
+              {...register("message", { required: true })}
             />
-            {errors.target_email && (
-              <span className="text-xs text-red-500">Please enter the referee's email.</span>
+            {errors.message && (
+              <span className="text-sm text-red-500 mt-1">Please enter the message.</span>
             )}
           </div>
-          <div className="mb-4">
-            <label htmlFor="target_phone" className="block text-gray-700 mb-1">Phone Number</label>
-            <input
-              type="text"
-              name="target_phone"
-              id="target_phone"
-              className="w-full rounded-lg border py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              {...register("target_phone", { required: true })}
-            />
-            {errors.target_phone && (
-              <span className="text-xs text-red-500">Please enter the referee's phone number.</span>
-            )}
-          </div>
-          <div className="mb-4">
-            <label htmlFor="course_name" className="block text-gray-700 mb-1">Course Name</label>
-            <input
-              type="text"
-              name="course_name"
-              id="course_name"
-              className="w-full rounded-lg border py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              {...register("course_name", { required: true })}
-            />
-            {errors.course_name && (
-              <span className="text-xs text-red-500">Please enter the course name.</span>
-            )}
-          </div>
-          <div className="mb-4">
-            <label htmlFor="course_id" className="block text-gray-700 mb-1">Course ID</label>
-            <input
-              type="text"
-              name="course_id"
-              id="course_id"
-              className="w-full rounded-lg border py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              {...register("course_id", { required: true })}
-            />
-            {errors.course_id && (
-              <span className="text-xs text-red-500">Please enter the course ID.</span>
-            )}
-          </div>
-          <div className="flex justify-end mt-6">
+          
+          <div className="flex justify-end mt-8">
             <button
               type="submit"
               disabled={loading}
-              className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Refer
+              {loading ? 'Sending...' : 'Refer'}
             </button>
           </div>
         </form>
@@ -162,5 +106,6 @@ function ReferForm() {
     </div>
   );
 }
+
 
 export default ReferForm;

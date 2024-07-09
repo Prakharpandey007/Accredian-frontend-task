@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-
 import companyLogoWhite from '../assests/company_logo.png';
 import facebookLogo from '../assests/icon-facebook.svg';
 import youtubeLogo from '../assests/icon-youtube.svg';
@@ -9,91 +8,69 @@ import instagramLogo from '../assests/icon-instagram.svg';
 
 const Footer = () => {
   return (
-    <div className='bg-slate-600'>
-     
-      <div className='container flex flex-col-reverse justify-between px-6 py-10 mx-auto space-y-8 md:flex-row md:space-y-0'>
-        
-        <div className='flex flex-col-reverse items-center justify-between space-y-12 md:flex-col md:space-y-0 md:items-start'>
-          <div className='mx-auto my-6 text-center text-white md:hidden'>
-            Copyright © 2022, All Rights Reserved
+    <footer className="bg-gradient-to-r from-slate-800 to-slate-900 text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="space-y-6">
+            <img src={companyLogoWhite} className="h-10" alt="Company Logo" />
+            <p className="text-sm text-gray-300">
+              Empowering your digital journey with innovative solutions.
+            </p>
+            <div className="flex space-x-4">
+              {[facebookLogo, youtubeLogo, twitterLogo, pinterestLogo, instagramLogo].map((logo, index) => (
+                <Link key={index} to="#" className="transition-transform hover:scale-110">
+                  <img src={logo} className="h-6 w-6" alt={`Social Media ${index + 1}`} />
+                </Link>
+              ))}
+            </div>
           </div>
-         
+
           <div>
-            <img src={companyLogoWhite} className='h-8' alt='' />
+            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+            <ul className="space-y-2">
+              {['Home', 'Pricing', 'Products', 'About'].map((item) => (
+                <li key={item}>
+                  <Link to="#" className="text-gray-300 hover:text-white transition-colors">
+                    {item}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
-         
-          <div className='flex justify-center space-x-4'>
-            
-            <Link to='#'>
-              <img src={facebookLogo} className='h-8' alt='' />
-            </Link>
-            
-            <Link to='#'>
-              <img src={youtubeLogo} className='h-8' alt='' />
-            </Link>
-          
-            <Link to='#'>
-              <img src={twitterLogo} className='h-8' alt='' />
-            </Link>
-            
-            <Link to='#'>
-              <img src={pinterestLogo} className='h-8' alt='' />
-            </Link>
-            
-            <Link to='#'>
-              <img src={instagramLogo} className='h-8' alt='' />
-            </Link>
+
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Company</h3>
+            <ul className="space-y-2">
+              {['Careers', 'Community', 'Privacy Policy'].map((item) => (
+                <li key={item}>
+                  <Link to="#" className="text-gray-300 hover:text-white transition-colors">
+                    {item}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
-        </div>
-        
-        <div className='flex justify-around space-x-32'>
-          <div className='flex flex-col space-y-3 text-white'>
-            <Link to='#' className='hover:text-brightRed'>
-              Home
-            </Link>
-            <Link to='#' className='hover:text-brightRed'>
-              Pricing
-            </Link>
-            <Link to='#' className='hover:text-brightRed'>
-              Products
-            </Link>
-            <Link to='#' className='hover:text-brightRed'>
-              About
-            </Link>
-          </div>
-          <div className='flex flex-col space-y-3 text-white'>
-            <Link to='#' className='hover:text-brightRed'>
-              Careers
-            </Link>
-            <Link to='#' className='hover:text-brightRed'>
-              Community
-            </Link>
-            <Link to='#' className='hover:text-brightRed'>
-              Privacy Policy
-            </Link>
+
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Stay Updated</h3>
+            <form className="space-y-4">
+              <input
+                type="email"
+                className="w-full px-4 py-2 rounded-md bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter your email"
+              />
+              <button className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800">
+                Subscribe
+              </button>
+            </form>
           </div>
         </div>
 
-       
-        <div className='flex flex-col justify-between'>
-          <form>
-            <div className='flex space-x-3'>
-              <input
-                type='text'
-                className='flex-1 px-4 rounded-full focus:outline-none'
-                placeholder='Updated in your inbox'
-              />
-              <button className='px-6 py-2 text-white rounded-full bg-red-600 hover:bg-brightRedLight focus:outline-none'>
-                Go
-              </button>
-            </div>
-          </form>
-          <div className='hidden text-white md:block'>
-            Copyright © 2022, All Rights Reserved
-          </div>
+        <div className="mt-12 pt-8 border-t border-gray-700 text-center text-sm text-gray-400">
+          © {new Date().getFullYear()} Your Company Name. All rights reserved.
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 

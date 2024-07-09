@@ -6,6 +6,8 @@ import Hero from './components/Hero';
 import About from './components/About';
 import ReferForm from './components/Referform';
 import Footer from './components/Footer';
+import FAQHeader from './components/Faq';
+
 function App() {
   const {showForm}=useContext(DataContext);
   return (
@@ -19,6 +21,7 @@ function App() {
       <Navbar />
       <Hero />
       <About/>
+      <FAQHeader/>
       <Footer />
     </BrowserRouter>
   );
